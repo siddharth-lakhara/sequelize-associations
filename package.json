@@ -1,0 +1,25 @@
+{
+  "name": "seq-association",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/hapi": "^18.4.0",
+    "nodemon": "^2.0.2",
+    "pg": "^7.15.1",
+    "sequelize": "^5.21.3",
+    "sequelize-cli": "^5.5.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.19.1"
+  }
+}
