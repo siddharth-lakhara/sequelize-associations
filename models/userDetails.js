@@ -5,10 +5,10 @@ module.exports = (sequelize, DataTypes) => {
     mobileNum: DataTypes.STRING,
     address: DataTypes.TEXT,
   }, {});
-  userDetails.associate = function (models) {
-    // Example of belongsTo association
-    // This is commented because we don't need this
+  // Example of belongsTo association
+  // This is commented because we don't need this
+  // userDetails.associate = (models) => {
     // userDetails.belongsTo(models.users, { foreignKey: 'userId', as: 'users' });
-  };
+  // };
   return userDetails;
 };

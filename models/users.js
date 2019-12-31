@@ -4,8 +4,9 @@ module.exports = (sequelize, DataTypes) => {
     userName: DataTypes.STRING,
     name: DataTypes.STRING,
   }, {});
-  users.associate = function (models) {
-    users.hasOne(models.userDetails, { foreignKey: 'userId', as: 'userDetails', onDelete: 'CASCADE' });
+  users.associate = (models) => {
+    users.hasOne(models.userDetails, { foreignKey: 'userId', as: 'userDetails' });
+    users.hasMany(models.posts, { foreignKey: 'userId', as: 'posts' });
   };
   return users;
 };

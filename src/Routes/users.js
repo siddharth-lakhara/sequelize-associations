@@ -5,7 +5,7 @@ module.exports = [{
   path: '/users',
   handler: async (req, h) => {
     const {
-      name, userName, mobileNum, address,
+      name, userName, mobileNum, address, posts,
     } = req.payload;
     try {
       const results = await db.users.create({
@@ -15,11 +15,15 @@ module.exports = [{
           mobileNum,
           address,
         },
+        posts,
       }, {
-        include: {
+        include: [{
           model: db.userDetails,
           as: 'userDetails',
-        },
+        }, {
+          model: db.posts,
+          as: 'posts',
+        }],
       });
       return {
         success: true,
@@ -39,6 +43,9 @@ module.exports = [{
         include: [{
           model: db.userDetails,
           as: 'userDetails',
+        }, {
+          model: db.posts,
+          as: 'posts',
         }],
       });
       return results;
@@ -53,7 +60,7 @@ module.exports = [{
   handler: async (req, h) => {
     const { userId } = req.params;
     const {
-      name, userName, mobileNum, address,
+      name, userName, mobileNum, address, posts,
     } = req.payload;
     const updateUsersObject = {
       name,
@@ -63,6 +70,7 @@ module.exports = [{
       mobileNum,
       address,
     };
+
     try {
       const updatePromises = [];
       const updateUsersPromise = db.users.update(
@@ -76,6 +84,22 @@ module.exports = [{
         { where: { userId } },
       );
       updatePromises.push(updateUserDetailsPromise);
+
+      const updatePostsPromises = posts.map((p) => {
+        const { postTitle, postId } = p;
+        const updateObject = {
+          title: postTitle,
+        };
+        const whereQuery = {
+          userId,
+          id: postId,
+        };
+        return db.posts.update(
+          updateObject,
+          { where: whereQuery },
+        );
+      });
+      updatePromises.push(...updatePostsPromises);
 
       await Promise.all(updatePromises);
       return 'user records updates';
@@ -94,12 +118,6 @@ module.exports = [{
         where: {
           id: userId,
         },
-        cascade: true,
-        include: [{
-          model: db.userDetails,
-          as: 'userDetails',
-          cascade: true,
-        }],
       });
       return results;
     } catch (e) {
