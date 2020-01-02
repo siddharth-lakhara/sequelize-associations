@@ -5,7 +5,7 @@ module.exports = [{
   path: '/users',
   handler: async (req, h) => {
     const {
-      name, userName, mobileNum, address, posts,
+      name, userName, mobileNum, address, posts, groups,
     } = req.payload;
     try {
       const results = await db.users.create({
@@ -16,6 +16,7 @@ module.exports = [{
           address,
         },
         posts,
+        groups,
       }, {
         include: [{
           model: db.userDetails,
@@ -23,6 +24,10 @@ module.exports = [{
         }, {
           model: db.posts,
           as: 'posts',
+        }, {
+          model: db.groups,
+          as: 'groups',
+          through: db.users_groups,
         }],
       });
       return {
