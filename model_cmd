@@ -1,3 +1,9 @@
 node_modules/.bin/sequelize model:generate --name users --attributes username:string,name:string
 
 node_modules/.bin/sequelize model:generate --name userDetails --attributes userId:integer,mobileNum:string,address:text
+
+node_modules/.bin/sequelize model:generate --name posts --attributes userId:integer,title:string
+
+node_modules/.bin/sequelize model:generate --name groups --attributes groupName:string
+
+node_modules/.bin/sequelize model:generate --name users_groups --attributes userId:integer,groupId:integer
