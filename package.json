@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@hapi/hapi": "^18.4.0",
+    "@hapi/hapi": "^19.1.1",
     "nodemon": "^2.0.2",
     "pg": "^7.15.1",
     "sequelize": "^5.21.3",
